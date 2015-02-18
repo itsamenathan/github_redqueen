@@ -4,10 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "async": "^0.9.0",
-    "gi": "^1.0.0",
     "gith": "^1.0.4",
-    "gitio": "^1.0.1",
     "gitio2": "^2.0.0",
     "request": "^2.53.0"
   },
