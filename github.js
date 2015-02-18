@@ -11,6 +11,8 @@ var commitmsg;
 
 gith({
 }).on( 'all', function( payload ) {
+  // ignore initial hooks ping
+  if ( ! payload.sha ) { return; }
     console.log(payload);
     pusher    = payload.pusher;
     repo      = payload.repo;
