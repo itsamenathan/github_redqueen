@@ -27,7 +27,7 @@ github.on('push', function(req){
 function print(err, shorturl){
    var msg = util.format("Detected change to %s from user %s.  Reason: '%s' - %s", repo, pusher, commitmsg, shorturl);
    console.log(msg);
-   rq.toIrc(msg);
+   rq.toIrc(msg, '##rqtest');
 }
 
 
