@@ -1,31 +1,30 @@
-var util = require('util');
-var gitio = require('gitio2');
-var gith = require('gith').create( 9003 );
-var rq = require('./redqueen.js');
+var util         = require('util');
+var EventEmitter = require('events').EventEmitter;
 
-var pusher;
-var repo;
-var url;    
-var compare;
-var commitmsg;
+var Github = function(){
+  var self = this;
+ 
+  // emit all types of events, and each event.
+  function respond(req, res) {
+      self.emit('all', req);
+      self.emit(req.headers['x-github-event'], req);
+      res.send(200);
+      return next();
+  }
 
-gith({
-}).on( 'all', function( payload ) {
-  // ignore initial hooks ping
-  if ( ! payload.sha ) { return; }
-    console.log(payload);
-    pusher    = payload.pusher;
-    repo      = payload.repo;
-    url       = payload.urls.head;
-    commitmsg = payload.original.head_commit.message.replace(/\+/g, " ");
-
-    gitio(url, print);
-
-});
-
-
-function print(err, shorturl){
-   var msg = util.format("Detected change to %s from user %s.  Reason: '%s' - %s", repo, pusher, commitmsg, shorturl);
-   console.log(msg);
-   rq.toIrc(msg);
+  // Check if request is from github
+  this.fromGithub = function(req, res, next){
+    if ( req.headers['x-github-event'] ) { 
+      respond(req, res); 
+    }
+    else {
+      res.send(400);
+      return;
+    }
+    return;
+  }
+  
 }
+
+util.inherits(Github, EventEmitter);
+module.exports = Github;

@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "gith": "^1.0.4",
     "gitio2": "^2.0.0",
-    "request": "^2.53.0"
+    "request": "^2.53.0",
+    "restify": "^2.8.5"
   },
   "devDependencies": {},
   "scripts": {
