@@ -5,8 +5,14 @@ module.exports = function(github){
   server.use(restify.acceptParser(server.acceptable));
   server.use(restify.bodyParser());
   
-  server.post('/', github.fromGithub);
+  server.post('/', github.fromGithub, debugPrint);
   
   server.listen(9003, '');
 };
+
+function debugPrint(req, res, next){
+  console.log(req.headers);
+  console.log(req.params);
+};
+
 

@@ -19,9 +19,9 @@ var Github = function(){
     }
     else {
       res.send(400);
-      return;
+      return next();
     }
-    return;
+    return next();
   }
   
 }
