@@ -13,7 +13,7 @@ var Github = function(){
   }
 
   // Check if request is from github
-  this.fromGithub = function(req, res, next){
+  this.request = function(req, res, next){
     if ( req.headers['x-github-event'] ) { 
       respond(req, res); 
     }

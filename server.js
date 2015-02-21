@@ -5,7 +5,8 @@ module.exports = function(github){
   server.use(restify.acceptParser(server.acceptable));
   server.use(restify.bodyParser());
   
-  server.post('/', github.fromGithub, debugPrint);
+  server.post('/', debugPrint);
+  server.post('/github/:channel', github.request);
   
   server.listen(9003, '');
 };
@@ -13,6 +14,7 @@ module.exports = function(github){
 function debugPrint(req, res, next){
   console.log(req.headers);
   console.log(req.params);
+  res.send(200);
+  return next();
 };
-
 
