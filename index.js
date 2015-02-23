@@ -17,17 +17,15 @@ github.on('push', function(req){
   push.commitmsg = payload.head_commit.message;
   push.numcommits = payload.commits.length;
 
-  gitio(payload.head_commit.url, print);
+  gitio(payload.compare, print);
 
 });
 
-github.on('all', function(req){
-  var payload   = req.params;
-  if ( payload.zen ){
-    var msg = util.format("Now monitoring %s for changes.", payload.repository.full_name);
-    console.log(msg);
-    rq.toIrc(msg, '##rqtest');
-  }
+github.on('ping', function(req){
+  var payload = req.params;
+  var msg = util.format("Now monitoring %s for changes.", payload.repository.full_name);
+  console.log(msg);
+  rq.toIrc(msg, '##rqtest');
 });
 
 function print(err, shorturl){
