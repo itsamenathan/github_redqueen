@@ -8,7 +8,7 @@ var config     = require('./config');
 exports.toIrc = function(msg, channel){
   var rq = config.redqueen;
   if (!rq.enable) { return; }
-  if (channel == null) { channel = rq.channel; }
+  if (channel === null) { channel = rq.channel; }
   var postData = JSON.stringify({
       'message'  : msg,
       'channel'  : channel,
@@ -27,6 +27,6 @@ exports.toIrc = function(msg, channel){
         }
       } 
   );
-}
+};
 
 

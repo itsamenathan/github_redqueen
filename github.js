@@ -28,9 +28,9 @@ var Github = function(){
       return next();
     }
     return next();
-  }
+  };
   
-}
+};
 
 util.inherits(Github, EventEmitter);
 module.exports = Github;

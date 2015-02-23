@@ -1,42 +1,47 @@
-var util       = require('util');
 var Github     = require('./github.js');
 var rq         = require('./redqueen.js');
 var gitio      = require('gitio2');
+var format     = require("string-template");
 
 var github = new Github();
 var server = require('./server.js')(github);
 
-var push = {};
 github.on('push', function(req){
   console.log(req.params);
 
-  var payload   = req.params;
-  push.pusher = payload.pusher.name;
-  push.repo = payload.repository.full_name;
-  push.channel = payload.channel;
-  push.commitmsg = payload.head_commit.message;
-  push.numcommits = payload.commits.length;
+  var push   = req.params;
 
-  gitio(payload.compare, print);
-
+  gitio(push.compare, function(err, shorturl){
+    var msg;
+    if ( push.commits.length > 1 ) {
+      msg = format("Detected {changes} changes to {repo} from user {user}.  Latest Reason: '{commitmsg}' - {url}", {
+                   changes   : push.commits.length,
+                   repo      : push.repository.full_name,
+                   user      : push.pusher.name,
+                   commitmsg : push.head_commit.message,
+                   url       : shorturl
+                   });
+    }
+    else {
+      msg = format("Detected change to {repo}  from user {user}.  Reason: '{commitmsg}' - {url}", {
+                   repo      : push.repository.full_name,
+                   user      : push.pusher.name,
+                   commitmsg : push.head_commit.message,
+                   url       : shorturl
+                   });
+    }
+   console.log(msg);
+   rq.toIrc(msg, push.channel);
+  });
 });
 
 github.on('ping', function(req){
-  var payload = req.params;
-  var msg = util.format("Now monitoring %s for changes.", payload.repository.full_name);
+  var ping = req.params;
+  var msg = format("Now monitoring {repo} for changes.",{
+                   repo      : push.repository.full_name
+                   });
   console.log(msg);
-  rq.toIrc(msg, '##rqtest');
+  rq.toIrc(msg, payload.channel);
 });
-
-function print(err, shorturl){
-   if ( push.numcommits > 1 ) {
-     var msg = util.format("Detected %s changes to %s from user %s.  Latest Reason: '%s' - %s", push.numcommits, push.repo, push.pusher, push.commitmsg, shorturl);
-   }
-   else {
-     var msg = util.format("Detected change to %s from user %s.  Reason: '%s' - %s", push.repo, push.pusher, push.commitmsg, shorturl);
-    }
-   console.log(msg);
-   rq.toIrc(msg, '##rqtest');
-}
 
 

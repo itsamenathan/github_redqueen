@@ -6,7 +6,8 @@
   "dependencies": {
     "gitio2": "^2.0.0",
     "request": "^2.53.0",
-    "restify": "^2.8.5"
+    "restify": "^2.8.5",
+    "string-template": "^0.2.0"
   },
   "devDependencies": {},
   "scripts": {

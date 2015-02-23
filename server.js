@@ -16,5 +16,5 @@ function debugPrint(req, res, next){
   console.log(req.params);
   res.send(200);
   return next();
-};
+}
 
