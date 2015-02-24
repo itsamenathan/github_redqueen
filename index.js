@@ -23,25 +23,25 @@ github.on('push', function(req){
                    });
     }
     else {
-      msg = format("Detected change to {repo}  from user {user}.  Reason: '{commitmsg}' - {url}", {
+      msg = format("Detected change to {repo} from user {user}.  Reason: '{commitmsg}' - {url}", {
                    repo      : push.repository.full_name,
                    user      : push.pusher.name,
                    commitmsg : push.head_commit.message,
                    url       : shorturl
                    });
     }
-   console.log(msg);
-   rq.toIrc(msg, push.channel);
+    console.log(msg);
+    rq.toIrc(msg, push.channel);
   });
 });
 
 github.on('ping', function(req){
   var ping = req.params;
   var msg = format("Now monitoring {repo} for changes.",{
-                   repo      : push.repository.full_name
+                   repo : ping.repository.full_name
                    });
   console.log(msg);
-  rq.toIrc(msg, payload.channel);
+  rq.toIrc(msg, ping.channel);
 });
 
 
