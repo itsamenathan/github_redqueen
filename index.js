@@ -1,9 +1,8 @@
-var Github     = require('./github.js');
+var github     = require('./github.js');
 var rq         = require('./redqueen.js');
 var gitio      = require('gitio2');
 var format     = require("string-template");
 
-var github = new Github();
 var server = require('./server.js')(github);
 
 github.on('push', function(req){

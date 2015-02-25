@@ -1,23 +1,9 @@
 var util         = require('util');
 var EventEmitter = require('events').EventEmitter;
 
-var Github = function(){
+function Github(){
   var self = this;
  
-  // emit all types of events, and each event.
-  function respond(req, res) {
-      if ( req.headers['x-github-event'] ){
-        self.emit('all', req);
-        self.emit(req.headers['x-github-event'], req);
-      }
-      else {
-        res.send(400);
-        return next();
-      }
-      res.send(200);
-      return next();
-  }
-
   // Check if request is from github, should check IP's or secret!
   this.request = function(req, res, next){
     if ( req.headers['x-github-event'] ) { 
@@ -29,8 +15,28 @@ var Github = function(){
     }
     return next();
   };
-  
-};
+
+  // emit all types of events, and each event.
+  var respond = function(req, res) {
+      if ( req.headers['x-github-event'] ){
+        self.emit('all', req);
+        self.emit(req.headers['x-github-event'], req);
+      }
+      else {
+        res.send(400);
+        return next();
+      }
+      res.send(200);
+      return next();
+  };
+}
 
 util.inherits(Github, EventEmitter);
-module.exports = Github;
+
+module.exports = (function() {
+  var instance;
+  if (typeof instance === 'undefined') {
+    instance = new Github();
+  }
+  return instance;
+}());
