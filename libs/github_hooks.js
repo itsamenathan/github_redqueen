@@ -4,7 +4,7 @@ var server     = require('./server.js');
 var gitio      = require('gitio2');
 var format     = require("string-template");
 
-server.post('/github/:channel', github.request);
+server.post('/:channel', github.request);
 
 github.on('push', function(req){
   console.log(req.params);
