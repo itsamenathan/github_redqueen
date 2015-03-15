@@ -2,7 +2,7 @@ var exports = module.exports = {};
 
 var util       = require('util');
 var request    = require('request');
-var config     = require('./config');
+var config     = GLOBAL.config;
 
 
 exports.toIrc = function(msg, channel){
