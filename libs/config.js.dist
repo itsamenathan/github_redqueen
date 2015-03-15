@@ -2,8 +2,10 @@ module.exports = {
   redqueen : {
     enable   : true,
     url      : 'https://restirc.tylercrumpton.com/relay',
-    channel  : '##rqtest',
     isaction : false,
     key      : '13371234'
-  }
+  },
+
+  github : {
+  },
 };

@@ -11,7 +11,10 @@ function Server(){
   return server;
 
   function debugPrint(req, res, next){
+    console.log('===============================');
+    console.log('=========== HEADER ============');
     console.log(req.headers);
+    console.log('=========== PARAMS ============');
     console.log(req.params);
     res.send(200);
     return next();
