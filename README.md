@@ -3,10 +3,10 @@ Nodejs script to send redqueen messages based on github hooks.
 
 ## Github Setup
 * Go to settings, add a new Webhook. 
-** Payload URL: https://frcv.net/github/%23makerslocal
-** Content type: application/json
-** Just the push event: enable
-** Active: enable
+  * Payload URL: https://frcv.net/github/%23makerslocal
+  * Content type: application/json
+  * Just the push event: enable
+  * Active: enable
 
 ## Run
 * ```node index.js /config/path```
