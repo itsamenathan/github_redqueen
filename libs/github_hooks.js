@@ -44,3 +44,13 @@ github.on('ping', function(req){
   rq.toIrc(msg, ping.channel);
 });
 
+github.on('pull_request', function(req){
+  var pr   = req.params;
+  // 
+  msg = format("{repo} - {user} - '{commitmsg}' - {url}",{
+                   action    : pr.action,
+                   repo      : pr.pull_request.user.login,
+                   user      : pr.sender.login,
+                   url       : pr.pull_request.url
+  });
+});
