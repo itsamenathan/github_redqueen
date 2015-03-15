@@ -14,7 +14,7 @@ github.on('push', function(req){
   gitio(push.compare, function(err, shorturl){
     var msg;
     if ( push.commits.length > 1 ) {
-      msg = format("Detected {changes} changes to {repo} from user {user}.  Latest Reason: '{commitmsg}' - {url}", {
+      msg = format("{repo} - {user} - '{commitmsg}' - ({changes} changes) - {url}",{
                    changes   : push.commits.length,
                    repo      : push.repository.full_name,
                    user      : push.pusher.name,
@@ -23,7 +23,7 @@ github.on('push', function(req){
                    });
     }
     else {
-      msg = format("Detected change to {repo} from user {user}.  Reason: '{commitmsg}' - {url}", {
+      msg = format("{repo} - {user} - '{commitmsg}' - {url}",{
                    repo      : push.repository.full_name,
                    user      : push.pusher.name,
                    commitmsg : push.head_commit.message,
