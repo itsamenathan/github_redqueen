@@ -7,7 +7,7 @@ var config     = GLOBAL.config;
 
 exports.toIrc = function(msg, channel){
   var rq = config.redqueen;
-  if (channel === null) { channel = rq.channel; }
+  if (channel === null) { channel = "#rqtest"; }
   var postData = JSON.stringify({
       'message'  : msg,
       'channel'  : channel,
