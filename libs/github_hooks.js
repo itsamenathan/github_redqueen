@@ -47,10 +47,13 @@ github.on('ping', function(req){
 github.on('pull_request', function(req){
   var pr   = req.params;
   // 
-  msg = format("{repo} - {user} - '{commitmsg}' - {url}",{
+  msg = format("{repo} - {user} - 'Pull Request: {action}' - {url}",{
                    action    : pr.action,
                    repo      : pr.pull_request.user.login,
                    user      : pr.sender.login,
                    url       : pr.pull_request.url
   });
+
+  console.log(msg);
+  rq.toIrc(msg, pr.channel);
 });
