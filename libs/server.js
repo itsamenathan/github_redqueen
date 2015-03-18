@@ -1,7 +1,7 @@
 var restify      = require('restify');
 
 function Server(){
-  var server       = restify.createServer();
+  var server = restify.createServer();
   server.use(restify.acceptParser(server.acceptable));
   server.use(restify.bodyParser());
   
