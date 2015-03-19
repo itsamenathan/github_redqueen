@@ -9,53 +9,53 @@ server.post('/:channel', github.request);
 github.on('push', function(req){
   console.log(req.params);
 
-  var push   = req.params;
+  var p   = req.params;
 
-  gitio(push.compare, function(err, shorturl){
+  gitio(p.compare, function(err, shorturl){
     var msg;
-    if ( push.commits.length > 1 ) {
+    if ( p.commits.length > 1 ) {
       msg = format("{repo} - {user} - '{commitmsg}' - ({changes} changes) - {url}",{
-                   changes   : push.commits.length,
-                   repo      : push.repository.full_name,
-                   user      : push.pusher.name,
-                   commitmsg : push.head_commit.message,
+                   changes   : p.commits.length,
+                   repo      : p.repository.full_name,
+                   user      : p.pusher.name,
+                   commitmsg : p.head_commit.message,
                    url       : shorturl
                    });
     }
     else {
       msg = format("{repo} - {user} - '{commitmsg}' - {url}",{
-                   repo      : push.repository.full_name,
-                   user      : push.pusher.name,
-                   commitmsg : push.head_commit.message,
+                   repo      : p.repository.full_name,
+                   user      : p.pusher.name,
+                   commitmsg : p.head_commit.message,
                    url       : shorturl
                    });
     }
     console.log(msg);
-    rq.toIrc(msg, push.channel);
+    rq.toIrc(msg, p.channel);
   });
 });
 
 github.on('ping', function(req){
-  var ping = req.params;
+  var p = req.params;
   var msg = format("Now monitoring {repo} for changes.",{
-                   repo : ping.repository.full_name
+                   repo : p.repository.full_name
                    });
   console.log(msg);
-  rq.toIrc(msg, ping.channel);
+  rq.toIrc(msg, p.channel);
 });
 
 github.on('pull_request', function(req){
-  var pr   = req.params;
+  var p   = req.params;
 
   msg = format("{repo} - {user} - 'Pull Request: {action}' - {url}",{
-                   action    : pr.action,
-                   repo      : pr.pull_request.user.login,
-                   user      : pr.sender.login,
-                   url       : pr.pull_request.url
+                   action    : p.action,
+                   repo      : p.pull_request.user.login,
+                   user      : p.sender.login,
+                   url       : p.pull_request.url
   });
 
   console.log(msg);
-  rq.toIrc(msg, pr.channel);
+  rq.toIrc(msg, p.channel);
 });
 
 github.on('release', function(req){
