@@ -46,7 +46,7 @@ github.on('ping', function(req){
 
 github.on('pull_request', function(req){
   var pr   = req.params;
-  // 
+
   msg = format("{repo} - {user} - 'Pull Request: {action}' - {url}",{
                    action    : pr.action,
                    repo      : pr.pull_request.user.login,
@@ -57,3 +57,18 @@ github.on('pull_request', function(req){
   console.log(msg);
   rq.toIrc(msg, pr.channel);
 });
+
+github.on('release', function(req){
+  var p = req.params;
+  gitio(p.release.url, function(err, shorturl){
+    msg = format("{repo} - {user} - 'Released: {tag_name}' - {url}",{
+                     repo      : p.repository.full_name,
+                     user      : p.release.author.name,
+                     tag_name  : p.release.tag_name,
+                     url       : shorturl
+    });
+    console.log(msg);
+    rq.toIrc(msg, pr.channel);
+  });
+});
+
