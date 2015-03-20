@@ -3,8 +3,15 @@ var rq         = require('./redqueen.js');
 var server     = require('./server.js');
 var gitio      = require('gitio2');
 var format     = require("string-template");
+var log        = require('logule').init(module);
+
 
 server.post('/:channel', github.request);
+
+function sendmsg(msg, channel){
+    log.info(msg);
+    rq.toIrc(msg, p.channel);
+}
 
 github.on('push', function(req){
   console.log(req.params);
@@ -30,8 +37,8 @@ github.on('push', function(req){
                    url       : shorturl
                    });
     }
-    console.log(msg);
-    rq.toIrc(msg, p.channel);
+  
+    sendmsg(msg, p.channel);
   });
 });
 
@@ -54,8 +61,7 @@ github.on('pull_request', function(req){
                    url       : p.pull_request.url
   });
 
-  console.log(msg);
-  rq.toIrc(msg, p.channel);
+  sendmsg(msg, p.channel);
 });
 
 github.on('release', function(req){
@@ -67,8 +73,8 @@ github.on('release', function(req){
                      tag_name  : p.release.tag_name,
                      url       : shorturl
     });
-    console.log(msg);
-    rq.toIrc(msg, pr.channel);
+
+    sendmsg(msg, p.channel);
   });
 });
 

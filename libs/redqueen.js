@@ -3,6 +3,7 @@ var exports = module.exports = {};
 var util       = require('util');
 var request    = require('request');
 var config     = GLOBAL.config;
+var log        = require('logule').init(module);
 
 
 exports.toIrc = function(msg, channel){
@@ -22,7 +23,7 @@ exports.toIrc = function(msg, channel){
       },
       function (error, response, body) {
         if (response.statusCode != '200'){ 
-          console.log(util.inspect(response));
+          log.info(util.inspect(response));
         }
       } 
   );

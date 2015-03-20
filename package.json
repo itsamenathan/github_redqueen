@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "gitio2": "^2.0.0",
+    "logule": "^2.0.1",
     "minimist": "^1.1.1",
     "request": "^2.53.0",
     "restify": "^2.8.5",
