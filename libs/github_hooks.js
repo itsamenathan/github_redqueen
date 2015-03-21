@@ -5,17 +5,14 @@ var gitio      = require('gitio2');
 var format     = require("string-template");
 var log        = require('logule').init(module);
 
-
 server.post('/:channel', github.request);
 
 function sendmsg(msg, channel){
     log.info(msg);
-    rq.toIrc(msg, p.channel);
+    rq.toIrc(msg, channel);
 }
 
 github.on('push', function(req){
-  console.log(req.params);
-
   var p   = req.params;
 
   gitio(p.compare, function(err, shorturl){
@@ -47,7 +44,6 @@ github.on('ping', function(req){
   var msg = format("Now monitoring {repo} for changes.",{
                    repo : p.repository.full_name
                    });
-  console.log(msg);
   rq.toIrc(msg, p.channel);
 });
 

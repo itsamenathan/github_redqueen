@@ -1,5 +1,6 @@
 var util         = require('util');
 var EventEmitter = require('events').EventEmitter;
+var log          = require('logule').init(module);
 
 function Github(){
   var self = this;
@@ -19,8 +20,10 @@ function Github(){
   // emit all types of events, and each event.
   var respond = function(req, res) {
       if ( req.headers['x-github-event'] ){
+        log.info(req.params);
         self.emit('all', req);
         self.emit(req.headers['x-github-event'], req);
+        
       }
       else {
         res.send(400);
