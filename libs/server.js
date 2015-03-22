@@ -1,4 +1,5 @@
 var restify      = require('restify');
+var config       = GLOBAL.config;
 
 function Server(){
   var server = restify.createServer();
@@ -7,7 +8,7 @@ function Server(){
   
   server.post('/', debugPrint);
   
-  server.listen(9003, '');
+  server.listen(config.server.port, '');
   return server;
 
   function debugPrint(req, res, next){
