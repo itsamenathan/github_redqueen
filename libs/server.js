@@ -1,5 +1,6 @@
 var restify      = require('restify');
 var config       = GLOBAL.config;
+var log        = require('logule').init(module);
 
 function Server(){
   var server = restify.createServer();
@@ -12,11 +13,8 @@ function Server(){
   return server;
 
   function debugPrint(req, res, next){
-    console.log('===============================');
-    console.log('=========== HEADER ============');
-    console.log(req.headers);
-    console.log('=========== PARAMS ============');
-    console.log(req.params);
+    log.info(req.headers);
+    log.info(req.params);
     res.send(200);
     return next();
   }
