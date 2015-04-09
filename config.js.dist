@@ -1,6 +1,6 @@
 module.exports = {
   redqueen : {
-    url      : 'https://restirc.tylercrumpton.com/relay',
+    url      : 'https://crump.space/rq',
     isaction : false,
     key      : '13371234'
   },
